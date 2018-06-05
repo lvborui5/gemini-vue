@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <i class="fa fa-home" style="font-size:35px;"></i>
+    <img v-lazy="'https://lvborui5.github.io/images/avatar.jpg'">
     <router-view/>
   </div>
 </template>
@@ -11,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,5 +20,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  &::before {
+    content: '';
+  }
 }
 </style>

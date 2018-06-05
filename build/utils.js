@@ -29,8 +29,40 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  //----------- sass loader start --------------------
+  function resolveResouces(_path, list) {
+    return list.map(item => {
+      return path.resolve(__dirname, _path + item)
+    })
+  }
+
+  function generateSassResourceLoader() {
+    var loaders = [
+      cssLoader,
+      // 'postcss-loader',
+      'sass-loader',
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          // it need a absolute path
+          resources: resolveResouces('../src/resources/scss/', ['_variable.scss'])
+        }
+      }
+    ];
+    if (options.extract) {
+      return ExtractTextPlugin.extract({
+        use: loaders,
+        fallback: 'vue-style-loader'
+      })
+    } else {
+      return ['vue-style-loader'].concat(loaders)
+    }
+  }
+  // *****继续配置返回值内容*****
+  //----------- sass loader end --------------------
+
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
@@ -59,8 +91,10 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    // sass: generateLoaders('sass', { indentedSyntax: true }),
+    // scss: generateLoaders('sass'),
+    sass: generateSassResourceLoader(),
+    scss: generateSassResourceLoader(),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
