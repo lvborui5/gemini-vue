@@ -3,6 +3,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import lazyload from './core/ui/lazyload'
+import './core/ui/scss/index.scss'
 import './resources/scss/index.scss'
 import axios from './core/network/axios.js'
 
